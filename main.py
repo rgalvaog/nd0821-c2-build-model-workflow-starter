@@ -1,5 +1,13 @@
-import json
+'''Build an ML Pipeline for Short-Term NYC Rentals
+Rafael Guerra
+January 17, 2022
 
+This main.py script contains the ML pipeline for this ML project which predicts pricing for short-term rentals in NYC using AIRBNB data.
+
+'''
+
+# Import Libraries
+import json
 import mlflow
 import tempfile
 import os
@@ -7,6 +15,7 @@ import wandb
 import hydra
 from omegaconf import DictConfig
 
+# Pipeline Steps
 _steps = [
     "download",
     "basic_cleaning",
@@ -19,10 +28,18 @@ _steps = [
 #    "test_regression_model"
 ]
 
-
-# This automatically reads in the configuration
+# Set Hydra config
 @hydra.main(config_name='config')
 def go(config: DictConfig):
+    '''
+    Go function sets up WAND experiment and generates artifacts.
+
+        Input:
+            configurations in config.yaml script
+        Output:
+            artifacts and ML pipeline
+
+    '''
 
     # Setup the wandb experiment. All runs will be grouped under this name
     os.environ["WANDB_PROJECT"] = config["main"]["project_name"]
@@ -49,10 +66,10 @@ def go(config: DictConfig):
             )
 
         if "basic_cleaning" in active_steps:
-            ##################
-            # Implement here #
-            ##################
+            # basic_cleaning found in src, not in components
+            # Perform basic cleaning with the artifact downaloded in the previous step
             pass
+
 
         if "data_check" in active_steps:
             ##################
