@@ -1,6 +1,6 @@
 '''Build an ML Pipeline for Short-Term NYC Rentals
 Rafael Guerra
-January 17, 2022
+January 13, 2022
 
 This main.py script contains the ML pipeline for this ML project which predicts pricing for short-term rentals in NYC using AIRBNB data.
 
