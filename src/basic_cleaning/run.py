@@ -6,8 +6,6 @@ import argparse
 import logging
 import wandb
 import pandas as pd
-import pandas_profiling
-
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
@@ -25,10 +23,6 @@ def go(args):
     artifact_local_path = wandb.use_artifact("sample.csv:latest").file()
     logger.info(f"Input File: {args.input_artifact}")
     df = pd.read_csv(artifact_local_path)
-
-    # Pandas Profiling
-    profile = pandas_profiling.ProfileReport(df)
-    profile.to_widgets()
 
     # Drop outliers
     
