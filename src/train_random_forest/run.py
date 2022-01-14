@@ -111,9 +111,9 @@ def go(args):
     # YOUR CODE HERE
     ######################################
     artifact = wandb.Artifact(
-        args.output_artifact,
-        type = args.output_type,
-        description = args.output_description,
+        artifact_name = args.output_artifact,
+        artifact_type = "model_export",
+        artifact_description = "Uploading model to W&B",
         metadata = rf_config
     )
     artifact.add_dir("random_forest_dir")
