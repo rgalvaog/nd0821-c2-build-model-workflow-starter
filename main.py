@@ -1,4 +1,6 @@
-'''Build an ML Pipeline for Short-Term NYC Rentals
+'''
+
+Build an ML Pipeline for Short-Term NYC Rentals
 Rafael Guerra
 January 13, 2022
 
@@ -52,6 +54,7 @@ def go(config: DictConfig):
     # Move to a temporary directory
     with tempfile.TemporaryDirectory() as tmp_dir:
 
+        # Download Step
         if "download" in active_steps:
             # Download file and load in W&B
             _ = mlflow.run(
@@ -65,10 +68,20 @@ def go(config: DictConfig):
                 },
             )
 
+        # Basic Cleaning Step
         if "basic_cleaning" in active_steps:
-            # basic_cleaning found in src, not in components
-            # Perform basic cleaning with the artifact downaloded in the previous step
-            pass
+            _ = mlflow.run(
+                os.path.join(hydra.utils.get_original_cwd(), "src", "basic_cleaning"),
+                "main",
+                parameters={
+                    "input_artifact": "sample.csv:latest",
+                    "output_artifact": "clean_sample.csv",
+                    "output_type": "clean_sample",
+                    "output_description": "Data with outliers and null values removed",
+                    "min_price": config['etl']['min_price'],
+                    "max_price": config['etl']['max_price']
+                },
+            )
 
 
         if "data_check" in active_steps:
