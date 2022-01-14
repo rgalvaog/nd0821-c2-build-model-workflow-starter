@@ -118,14 +118,24 @@ def go(config: DictConfig):
             with open(rf_config, "w+") as fp:
                 json.dump(dict(config["modeling"]["random_forest"].items()), fp)  # DO NOT TOUCH
 
-            # NOTE: use the rf_config we just created as the rf_config parameter for the train_random_forest
-            # step
+            # NOTE: use the rf_config we just created as the rf_config parameter for the train_random_forest step
 
-            ##################
-            # Implement here #
-            ##################
+            _ = mlflow.run(
+                os.path.join(hydra.utils.get_original_cwd(), "src", "train_random_forest"),
+                "main",
+                parameters={
+                    "trainval_artifact": "trainval_data.csv:latest",
+                    "val_size": config['modeling']['val_size'],
+                    "random_seed": config['modeling']['random_seed'],
+                    "stratify_by": config['modeling']['stratify_by'],
+                    "rf_config": os.path.abspath("rf_config.json"),
+                    "max_tfidf_features": config['modeling']['max_tfidf_features'],
+                    "output_artifact": "random_forest_export",
+                    "output_type": "sklearn pipeline object",
+                    "output_description": "trained sklearn pipeline"                                        
+                },
+            )
 
-            pass
         
         # Test Regression Model Step
         if "test_regression_model" in active_steps:
