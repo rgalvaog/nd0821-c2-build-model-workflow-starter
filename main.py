@@ -128,11 +128,9 @@ def go(config: DictConfig):
                     "val_size": config['modeling']['val_size'],
                     "random_seed": config['modeling']['random_seed'],
                     "stratify_by": config['modeling']['stratify_by'],
-                    "rf_config": os.path.abspath("rf_config.json"),
+                    "rf_config": rf_config,
                     "max_tfidf_features": config['modeling']['max_tfidf_features'],
-                    "output_artifact": "random_forest_export",
-                    "output_type": "sklearn pipeline object",
-                    "output_description": "trained sklearn pipeline"                                        
+                    "output_artifact":"random_forest_export.csv"                               
                 },
             )
 

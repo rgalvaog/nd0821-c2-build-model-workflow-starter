@@ -113,7 +113,7 @@ def go(args):
     artifact = wandb.Artifact(
         artifact_name = args.output_artifact,
         artifact_type = "model_export",
-        artifact_description = "Uploading model to W&B",
+        artifact_description = "Uploading RF model to W&B",
         metadata = rf_config
     )
     artifact.add_dir("random_forest_dir")
