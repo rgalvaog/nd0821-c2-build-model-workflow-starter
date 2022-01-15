@@ -32,21 +32,26 @@ def go(args):
     logger.info(f'Max: {max_price}')
 
     # Ensure price is between minimum and maximum values
+
     idx = df['price'].between(min_price, max_price)
     df = df[idx].copy()
 
     # Convert last_review to datetime
+
     df['last_review'] = pd.to_datetime(df['last_review'])
     logger.info('Successfully converted last_review to datetime')
 
     # Fig geolocation bug
+
     idx = df['longitude'].between(-74.25, -73.50) & df['latitude'].between(40.5, 41.2)
     df = df[idx].copy()
 
     # Save results to CSV
+    
     df.to_csv("clean_sample.csv", index=False)
 
     # Upload CSV artifact to WANDB
+    
     artifact = wandb.Artifact(
      args.output_artifact,
      type=args.output_type,
